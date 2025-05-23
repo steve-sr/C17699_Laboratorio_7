@@ -9,47 +9,34 @@ const router = createRouter({
       name: 'landing',
       component: () => import('@/layouts/LandingLayout.vue'),
       children: [
+        { path: '', name: 'home', component: HomeView },
+        { path: 'about', name: 'about', component: () => import('../views/AboutView.vue') },
+        { path: 'features', name: 'features', component: () => import('../views/FeaturesView.vue') },
+        { path: 'pricing', name: 'pricing', component: () => import('../views/PricingView.vue') },
+        { path: 'contact', name: 'contact', component: () => import('../views/ContactView.vue') },
         {
-          path: '/',
-          name: 'home',
-          component: HomeView,
-        },
-        {
-          path: '/about',
-          name: 'about',
-          component: () => import('../views/AboutView.vue'),
-        },
-        {
-          path: '/features',
-          name: 'features',
-          component: () => import('../views/FeaturesView.vue'),
-        },
-        {
-          path: '/pricing',
-          name: 'pricing',
-          component: () => import('../views/PricingView.vue'),
-        },
-        {
-          path: '/contact',
-          name: 'contact',
-          component: () => import('../views/ContactView.vue'),
-        },
-         {
-          path: '/item/:id',
+          path: 'item/:id',
           name: 'item',
-          props: (route) =>{
-            return {
-               id: +route.params.id
-            }
-          },
+          props: route => ({ id: +route.params.id }),
           component: () => import('../views/ItemView.vue'),
         },
       ]
     },
     {
       path: '/auth',
-      name: 'login',
-      component: () => import('../views/LoginView.vue'),
+      component: () => import('@/layouts/AuthLayout.vue'),
+      children: [
+        {
+          path: 'login',
+          name: 'login',
+          component: () => import('../views/LoginView.vue'),
+        },
+        {
+          path: 'register',
+          name: 'register',
+          component: () => import('../views/RegisterView.vue'),
+        }
+      ]
     }
   ],
 })
